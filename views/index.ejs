@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selamat Datang – ScentOS</title>
+
+  <!-- Font & Icon - Preload for better performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;600;700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg,
+        #0a0606 0%,
+        #1a0f0a 8%,
+        #2d1810 15%,
+        #462506 30%,
+        #5D4037 45%,
+        #8D6E63 60%,
+        #9F6920 75%,
+        #DAA755 90%,
+        #E9C579 100%
+      );
+      background-attachment: fixed;
+      opacity: 0;
+      animation: fadeIn 1.5s ease-out forwards;
+      position: relative;
+      overflow-x: hidden;
+      cursor: auto;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 15% 85%, rgba(241, 222, 168, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 15%, rgba(218, 167, 85, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.6;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      height: 700px;
+      margin: 80px auto;
+      display: flex;
+      overflow: hidden;
+      border-radius: 40px;
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.98) 0%, 
+          rgba(253, 246, 228, 0.95) 25%,
+          rgba(241, 222, 168, 0.92) 50%,
+          rgba(233, 197, 121, 0.88) 75%,
+          rgba(218, 167, 85, 0.85) 100%
+        );
+      backdrop-filter: blur(15px);
+      box-shadow:
+        0 40px 80px rgba(26, 15, 10, 0.25),
+        0 20px 40px rgba(70, 37, 6, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      border: 2px solid rgba(241, 222, 168, 0.4);
+      position: relative;
+      transform: translateY(30px);
+      animation: slideUp 1s ease-out 0.3s forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        0 50px 100px rgba(26, 15, 10, 0.3),
+        0 25px 50px rgba(70, 37, 6, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); }
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #DAA755, #E9C579, #F1DEA8, #DAA755);
+      border-radius: 42px;
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    .left {
+      flex: 1;
+      position: relative;
+      border-radius: 40px 0 0 40px;
+      overflow: hidden;
+    }
+
+    .slider {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      will-change: opacity;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+
+    .dots {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      padding: 16px 25px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(20px) saturate(1.2);
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      z-index: 10;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
+    }
+
+    .dot::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #DAA755, #E9C579, #F1DEA8);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .dot::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #ffffff, #DAA755);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dot.active {
+      background: linear-gradient(45deg, #DAA755, #E9C579);
+      transform: scale(1.4);
+      box-shadow: 
+        0 6px 20px rgba(218, 167, 85, 0.5),
+        0 0 30px rgba(233, 197, 121, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .dot.active::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .dot:hover:not(.active) {
+      transform: scale(1.2);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .dot:hover:not(.active)::before {
+      opacity: 0.8;
+    }
+
+    .right {
+      flex: 1;
+      padding: 60px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 35px;
+      position: relative;
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.15) 0%, 
+          rgba(241, 222, 168, 0.08) 50%,
+          rgba(218, 167, 85, 0.05) 100%
+        );
+    }
+
+    .right::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 20%, rgba(241, 222, 168, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(218, 167, 85, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+      animation: rightGlow 8s ease-in-out infinite;
+    }
+
+    @keyframes rightGlow {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .right h2 {
+      font-size: 38px;
+      font-weight: 800;
+      font-family: 'Playfair Display', serif;
+      color: #462506;
+      text-shadow: 
+        2px 2px 4px rgba(0,0,0,0.15),
+        0 0 20px rgba(70, 37, 6, 0.2),
+        0 0 40px rgba(218, 167, 85, 0.1);
+      letter-spacing: 0.8px;
+      line-height: 1.2;
+      position: relative;
+      transform: translateY(10px);
+      animation: titleFloat 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+    }
+
+    @keyframes titleFloat {
+      to { transform: translateY(0); }
+    }
+
+    .right h2::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        #DAA755, 
+        #E9C579, 
+        #F1DEA8, 
+        #E9C579, 
+        #DAA755, 
+        transparent
+      );
+      border-radius: 2px;
+      animation: underlineFlow 4s ease-in-out infinite;
+      box-shadow: 0 2px 8px rgba(218, 167, 85, 0.3);
+    }
+
+    @keyframes underlineFlow {
+      0%, 100% { 
+        opacity: 0.7; 
+        transform: translateX(-50%) scaleX(0.8); 
+        filter: blur(0px);
+      }
+      50% { 
+        opacity: 1; 
+        transform: translateX(-50%) scaleX(1.2); 
+        filter: blur(0.5px);
+      }
+    }
+
+    .right h2 span {
+      background: linear-gradient(135deg, 
+        #9F6920 0%, 
+        #DAA755 25%, 
+        #E9C579 50%, 
+        #F1DEA8 75%, 
+        #ffffff 100%
+      );
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+      animation: textShimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes textShimmer {
+      0%, 100% { 
+        background-position: 0% 50%; 
+        transform: scale(1); 
+      }
+      50% { 
+        background-position: 100% 50%; 
+        transform: scale(1.05); 
+      }
+    }
+
+    .right p {
+      color: #5D4037;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.7;
+      font-family: 'Cormorant Garamond', serif;
+      text-shadow: 
+        0 2px 4px rgba(0,0,0,0.08),
+        0 0 15px rgba(93, 64, 55, 0.1);
+      margin-bottom: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: textFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+    }
+
+    @keyframes textFadeIn {
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    .btn {
+      padding: 20px 40px;
+      margin: 10px;
+      border: none;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 17px;
+      color: #fff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-family: 'Inter', sans-serif;
+      min-width: 180px;
+      justify-content: center;
+      transform: translateY(30px);
+      opacity: 0;
+      animation: btnFadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .btn:first-of-type {
+      animation-delay: 1.4s;
+    }
+
+    .btn:last-of-type {
+      animation-delay: 1.6s;
+    }
+
+    @keyframes btnFadeIn {
+      to { 
+        transform: translateY(0); 
+        opacity: 1; 
+      }
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255,255,255,0.4), 
+        rgba(255,255,255,0.6), 
+        rgba(255,255,255,0.4), 
+        transparent
+      );
+      transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn:active::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, 
+        #DAA755 0%, 
+        #E9C579 30%, 
+        #F1DEA8 60%, 
+        #ffffff 100%
+      );
+      border: 3px solid rgba(241, 222, 168, 0.8);
+      color: #462506;
+      box-shadow: 
+        0 12px 35px rgba(218, 167, 85, 0.4),
+        0 6px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .register-btn {
+      background: linear-gradient(135deg, 
+        #462506 0%, 
+        #5D4037 30%, 
+        #8D6E63 60%, 
+        #A1887F 100%
+      );
+      border: 3px solid rgba(93, 64, 55, 0.8);
+      color: #F1DEA8;
+      box-shadow: 
+        0 12px 35px rgba(70, 37, 6, 0.4),
+        0 6px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-5px) scale(1.05) rotateX(5deg);
+      background: linear-gradient(135deg, 
+        #E9C579 0%, 
+        #F1DEA8 30%, 
+        #ffffff 60%, 
+        #ffffff 100%
+      );
+      box-shadow: 
+        0 20px 50px rgba(218, 167, 85, 0.5),
+        0 10px 30px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 0 40px rgba(241, 222, 168, 0.6);
+      border-color: #F1DEA8;
+       color: #2d1810;
+    }
+
+    .register-btn:hover {
+      transform: translateY(-5px) scale(1.05) rotateX(5deg);
+      background: linear-gradient(135deg, 
+        #5D4037 0%, 
+        #8D6E63 30%, 
+        #A1887F 60%, 
+        #BCAAA4 100%
+      );
+      box-shadow: 
+        0 20px 50px rgba(70, 37, 6, 0.5),
+        0 10px 30px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 0 40px rgba(141, 110, 99, 0.4);
+      border-color: #A1887F;
+      color: #ffffff;
+    }
+
+    .btn i {
+      font-size: 20px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .btn:hover i {
+      transform: scale(1.2) rotateZ(5deg);
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    }
+
+    .btn:active {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* Interactive cursor effects */
+    .btn {
+      cursor: pointer;
+    }
+
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+        margin: 40px 20px;
+        max-width: none;
+        width: calc(100% - 40px);
+        border-radius: 32px;
+      }
+
+      .left {
+        border-radius: 32px 32px 0 0;
+      }
+
+      .slider {
+        height: 350px;
+      }
+
+      .dots {
+        bottom: 20px;
+        gap: 12px;
+        padding: 12px 20px;
+      }
+
+      .dot {
+        width: 14px;
+        height: 14px;
+      }
+
+      .right {
+        padding: 50px 35px;
+        gap: 30px;
+      }
+
+      .right h2 {
+        font-size: 32px;
+      }
+
+      .right p {
+        font-size: 18px;
+      }
+
+      .btn {
+        padding: 16px 32px;
+        font-size: 16px;
+        min-width: 160px;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px) scale(1.02);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        margin: 20px 15px;
+        width: calc(100% - 30px);
+        border-radius: 28px;
+      }
+
+      .right {
+        padding: 40px 30px;
+        gap: 25px;
+      }
+
+      .right h2 {
+        font-size: 28px;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        font-size: 15px;
+        margin: 8px;
+      }
+    }
+
+    /* Enhanced loading states */
+    .slide {
+      background: linear-gradient(45deg, 
+        rgba(241, 222, 168, 0.15), 
+        rgba(218, 167, 85, 0.12), 
+        rgba(241, 222, 168, 0.15)
+      );
+      background-size: 300% 300%;
+      animation: imageLoading 3s ease-in-out infinite;
+    }
+
+    @keyframes imageLoading {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .slide[src] {
+      animation: none;
+      background: none;
+    }
+
+    /* Accessibility improvements */
+    .btn:focus {
+      outline: 4px solid rgba(218, 167, 85, 0.6);
+      outline-offset: 3px;
+    }
+
+    .dot:focus {
+      outline: 3px solid rgba(218, 167, 85, 0.8);
+      outline-offset: 3px;
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+
+  
+
+
+    @keyframes buttonPulse {
+      0% { box-shadow: 0 12px 35px rgba(218, 167, 85, 0.4), 0 6px 20px rgba(0, 0, 0, 0.15); }
+      100% { box-shadow: 0 16px 45px rgba(218, 167, 85, 0.6), 0 8px 25px rgba(0, 0, 0, 0.2); }
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left">
+      <div class="slider">
+        <img class="slide active" src="/img/index1.png" alt="Slide 1">
+        <img class="slide" src="/img/index2.png" alt="Slide 2">
+        <img class="slide" src="/img/index3.png" alt="Slide 3">
+        <img class="slide" src="/img/index4.png" alt="Slide 4">
+        <div class="dots">
+          <span class="dot active" data-i="0"></span>
+          <span class="dot" data-i="1"></span>
+          <span class="dot" data-i="2"></span>
+          <span class="dot" data-i="3"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="right" data-aos="fade-left">
+      <h2>Selamat datang di <span>ScentOS</span>!</h2>
+      <p>Apakah kamu sudah punya akun?</p>
+      <a href="/login" class="btn login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <a href="/register" class="btn register-btn"><i class="fas fa-user-plus"></i> Register</a>
+    </div>
+  </div>
+
+  <!-- Slider Script -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const container = document.querySelector('.container');
+    let idx = 0;
+    let timer;
+    let isHovering = false;
+
+    // Enhanced slide transition with 3D effects
+    function show(n) {
+      slides.forEach((s, i) => {
+        s.classList.remove('active');
+        if (i === n) {
+          s.classList.add('active');
+        }
+      });
+      
+      dots.forEach((d, i) => {
+        d.classList.remove('active');
+        if (i === n) {
+          d.classList.add('active');
+        }
+      });
+      
+      idx = n;
+    }
+
+    function next() { 
+      show((idx + 1) % slides.length); 
+    }
+    
+    function prev() { 
+      show((idx - 1 + slides.length) % slides.length); 
+    }
+    
+    function start() { 
+      clearInterval(timer);
+      timer = setInterval(next, 3500); 
+    }
+    
+    function reset() { 
+      clearInterval(timer); 
+      start(); 
+    }
+
+    // Enhanced dot interactions
+    dots.forEach((d, i) => {
+      d.addEventListener('click', () => {
+        show(parseInt(d.dataset.i));
+        reset();
+      });
+    });
+
+    start();
+
+    // Enhanced pause/resume on hover
+    container.addEventListener('mouseenter', () => {
+      clearInterval(timer);
+      isHovering = true;
+    });
+    
+    container.addEventListener('mouseleave', () => {
+      isHovering = false;
+      start();
+    });
+
+    // Enhanced button interactions with haptic feedback
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach((button) => {
+      button.addEventListener('mousedown', function(e) {
+        // Create ripple effect
+        const ripple = document.createElement('div');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s ease-out forwards';
+        ripple.style.pointerEvents = 'none';
+        
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    // Enhanced keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prev();
+        reset();
+        e.preventDefault();
+      } else if (e.key === 'ArrowRight') {
+        next();
+        reset();
+        e.preventDefault();
+      } else if (e.key >= '1' && e.key <= '4') {
+        show(parseInt(e.key) - 1);
+        reset();
+        e.preventDefault();
+      }
+    });
+
+    // Enhanced touch support for mobile
+    let startX = 0;
+    let startY = 0;
+    
+    container.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+
+    container.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = startX - endX;
+      const diffY = startY - endY;
+      
+      // Only trigger if horizontal swipe is more significant than vertical
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+          next();
+        } else {
+          prev();
+        }
+        reset();
+      }
+    });
+
+    // Add performance optimization
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          start();
+        } else {
+          clearInterval(timer);
+        }
+      });
+    });
+    observer.observe(container);
+
+    // Preload images for smoother transitions
+    slides.forEach((slide, i) => {
+      if (i > 0) {
+        const img = new Image();
+        img.src = slide.src;
+      }
+    });
+  </script>
+
+  <!-- JS Libraries - Only load what we need -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 50,
+      disable: 'mobile'
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <title>YSL Y - Detail Produk</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: 
+        radial-gradient(ellipse at top left, rgba(70, 37, 6, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(218, 167, 85, 0.12) 0%, transparent 50%),
+        linear-gradient(135deg, 
+          #1a0f0a 0%, 
+          #2d1810 10%,
+          #462506 25%, 
+          #5D4037 40%, 
+          #8D6E63 55%, 
+          #9F6920 70%,
+          #DAA755 85%, 
+          #E9C579 100%
+        );
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #462506;
+      position: relative;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 15% 85%, rgba(241, 222, 168, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 85% 15%, rgba(218, 167, 85, 0.06) 0%, transparent 60%),
+        radial-gradient(circle at 50% 50%, rgba(159, 105, 32, 0.05) 0%, transparent 70%),
+        linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.02) 50%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+      animation: backgroundShift 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.5" fill="%23ffffff" opacity="0.02"/><circle cx="75" cy="75" r="0.3" fill="%23ffffff" opacity="0.015"/><circle cx="50" cy="10" r="0.4" fill="%23ffffff" opacity="0.02"/><circle cx="10" cy="60" r="0.2" fill="%23ffffff" opacity="0.01"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.95) 0%, 
+          rgba(253, 246, 228, 0.9) 50%,
+          rgba(241, 222, 168, 0.85) 100%
+        );
+      backdrop-filter: blur(20px) saturate(1.1);
+      border-radius: 32px;
+      padding: 40px;
+      box-shadow: 
+        0 30px 60px rgba(26, 15, 10, 0.2),
+        0 15px 30px rgba(70, 37, 6, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(241, 222, 168, 0.3);
+      animation: slideUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+      transform: translateY(30px);
+    }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif !important;
+      font-weight: 800 !important;
+      color: #462506 !important;
+      font-size: 3rem !important;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1rem !important;
+      position: relative;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #DAA755, #E9C579);
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { opacity: 0.7; transform: scaleX(0.8); }
+      50% { opacity: 1; transform: scaleX(1); }
+    }
+
+    .text-muted {
+      font-weight: 600 !important;
+      color: #9F6920 !important;
+      font-size: 1.2rem !important;
+      font-family: 'Playfair Display', serif !important;
+      position: relative;
+      margin-bottom: 1.5rem !important;
+    }
+
+    .text-muted::before {
+      content: '💎';
+      margin-right: 8px;
+      animation: gemSparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes gemSparkle {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(10deg); }
+    }
+
+    .product-description {
+      font-family: 'Cormorant Garamond', serif !important;
+      font-size: 1.1rem !important;
+      line-height: 1.7 !important;
+      color: #5D4037 !important;
+      margin-bottom: 2rem !important;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      border-left: 4px solid #DAA755;
+    }
+
+    .quantity-box {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.8) 0%, 
+          rgba(241, 222, 168, 0.6) 100%
+        );
+      border-radius: 20px;
+      border: 2px solid rgba(218, 167, 85, 0.3);
+      box-shadow: 
+        0 10px 30px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .quantity-box input {
+      width: 80px !important;
+      height: 50px !important;
+      text-align: center;
+      border-radius: 15px !important;
+      border: 2px solid #DAA755 !important;
+      font-weight: 700 !important;
+      font-size: 1.2rem !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      color: #462506 !important;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    }
+
+    .quantity-box input:focus {
+      outline: none !important;
+      border-color: #9F6920 !important;
+      box-shadow: 0 0 0 3px rgba(159, 105, 32, 0.2) !important;
+    }
+
+    .btn-outline-secondary {
+      border-radius: 15px !important;
+      width: 50px !important;
+      height: 50px !important;
+      border: 2px solid #DAA755 !important;
+      color: #9F6920 !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      font-weight: 700 !important;
+      font-size: 1.3rem !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-outline-secondary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(135deg, #DAA755, #E9C579);
+      transition: width 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn-outline-secondary:hover::before {
+      width: 100%;
+    }
+
+    .btn-outline-secondary:hover {
+      color: #ffffff !important;
+      border-color: #E9C579 !important;
+      transform: translateY(-3px) scale(1.05) !important;
+      box-shadow: 0 8px 25px rgba(218, 167, 85, 0.4) !important;
+    }
+
+    .btn-pesan {
+      background: linear-gradient(135deg, #8B4513 0%, #DAA755 50%, #E9C579 100%) !important;
+      color: white !important;
+      font-weight: 700 !important;
+      border: none !important;
+      border-radius: 50px !important;
+      padding: 16px 32px !important;
+      font-size: 1.1rem !important;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 
+        0 8px 25px rgba(139, 69, 19, 0.4),
+        0 4px 12px rgba(0,0,0,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.3) !important;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2rem !important;
+    }
+
+    .btn-pesan::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-pesan:hover::before {
+      left: 100%;
+    }
+
+    .btn-pesan:hover {
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 
+        0 15px 40px rgba(139, 69, 19, 0.5),
+        0 8px 20px rgba(0,0,0,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.4) !important;
+      color: white !important;
+    }
+
+    .btn-secondary {
+      border-radius: 50px !important;
+      font-weight: 600 !important;
+      color: #fff !important;
+      background: linear-gradient(135deg, #5D4037 0%, #8D6E63 100%) !important;
+      border: none !important;
+      padding: 12px 24px !important;
+      box-shadow: 
+        0 8px 25px rgba(93, 64, 55, 0.4),
+        0 4px 12px rgba(0,0,0,0.2) !important;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-secondary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-secondary:hover::before {
+      left: 100%;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 
+        0 15px 40px rgba(93, 64, 55, 0.5),
+        0 8px 20px rgba(0,0,0,0.25) !important;
+      color: #fff !important;
+      text-decoration: none;
+    }
+
+    #totalHarga.animate {
+      animation: pulse 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15) rotate(2deg); }
+      100% { transform: scale(1); }
+    }
+
+    select.form-select {
+      border-radius: 16px !important;
+      border: 2px solid #DAA755 !important;
+      font-weight: 600 !important;
+      padding: 15px 20px !important;
+      font-size: 1rem !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      color: #462506 !important;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+      margin-bottom: 2rem !important;
+      position: relative;
+    }
+
+    select.form-select:focus {
+      outline: none !important;
+      border-color: #9F6920 !important;
+      box-shadow: 0 0 0 3px rgba(159, 105, 32, 0.2) !important;
+    }
+
+    select.form-select option {
+      background: #ffffff;
+      color: #462506;
+      padding: 10px;
+    }
+
+    .image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 
+        0 20px 50px rgba(26, 15, 10, 0.2),
+        0 10px 25px rgba(70, 37, 6, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+      animation: imageFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes imageFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(1deg); }
+    }
+
+    .image-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .image-container:hover::before {
+      opacity: 1;
+      animation: imageShimmer 1.5s ease-in-out;
+    }
+
+    @keyframes imageShimmer {
+      0% { transform: translateX(-100%) rotate(-10deg); }
+      100% { transform: translateX(100%) rotate(10deg); }
+    }
+
+    img.img-fluid {
+      border-radius: 24px !important;
+      box-shadow: none !important;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      filter: saturate(0.9) contrast(1.1);
+      width: 100%;
+      height: auto;
+    }
+
+    .image-container:hover img.img-fluid {
+      filter: saturate(1.2) contrast(1.2) brightness(1.05) !important;
+      transform: scale(1.05) !important;
+    }
+
+    #totalHarga {
+      font-weight: 800 !important;
+      color: #462506 !important;
+      font-size: 2.5rem !important;
+      font-family: 'Playfair Display', serif !important;
+      text-align: center;
+      padding: 20px;
+      background: 
+        linear-gradient(135deg, 
+          rgba(218, 167, 85, 0.2) 0%, 
+          rgba(241, 222, 168, 0.3) 100%
+        );
+      border-radius: 20px;
+      border: 2px solid rgba(218, 167, 85, 0.4);
+      box-shadow: 
+        0 10px 30px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #totalHarga::before {
+      content: '💰';
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 1.5rem;
+      animation: coinSpin 3s ease-in-out infinite;
+    }
+
+    @keyframes coinSpin {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+    }
+
+    /* ENHANCED LOCATION SELECTOR */
+    .location-selector {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .location-selector::before {
+      content: '📍';
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .location-selector select {
+      padding-left: 50px !important;
+    }
+
+    /* ENHANCED FORM SECTION */
+    .form-section {
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.6) 0%, 
+          rgba(241, 222, 168, 0.4) 100%
+        );
+      border-radius: 24px;
+      padding: 30px;
+      border: 2px solid rgba(218, 167, 85, 0.3);
+      box-shadow: 
+        0 15px 40px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(241, 222, 168, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ENHANCED QUANTITY LABEL */
+    .quantity-label {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: #462506;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* RESPONSIVE ENHANCEMENTS */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+        margin: 10px;
+      }
+
+      h1 {
+        font-size: 2.2rem !important;
+      }
+
+      .quantity-box {
+        gap: 10px;
+        padding: 15px;
+      }
+
+      .quantity-box input {
+        width: 70px !important;
+        height: 45px !important;
+      }
+
+      .btn-outline-secondary {
+        width: 45px !important;
+        height: 45px !important;
+      }
+
+      #totalHarga {
+        font-size: 2rem !important;
+      }
+
+      .btn-pesan {
+        padding: 14px 24px !important;
+        font-size: 1rem !important;
+      }
+    }
+
+    /* ACCESSIBILITY IMPROVEMENTS */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus visible improvements */
+    .btn:focus-visible,
+    select:focus-visible,
+    input:focus-visible {
+      outline: 3px solid rgba(218, 167, 85, 0.6) !important;
+      outline-offset: 2px !important;
+    }
+
+    /* LOADING ANIMATION */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .loading-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(241, 222, 168, 0.3);
+      border-top: 4px solid #DAA755;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* NOTIFICATION SYSTEM */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.95) 0%, 
+          rgba(241, 222, 168, 0.9) 100%
+        );
+      backdrop-filter: blur(20px) saturate(1.2);
+      border: 1px solid rgba(241, 222, 168, 0.4);
+      border-radius: 20px;
+      padding: 20px 25px;
+      box-shadow: 
+        0 20px 50px rgba(26, 15, 10, 0.2),
+        0 10px 25px rgba(70, 37, 6, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transform: translateX(400px);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 300px;
+      max-width: 400px;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .notification.success {
+      border-left: 4px solid #4caf50;
+    }
+
+    .notification.error {
+      border-left: 4px solid #f44336;
+    }
+
+    .notification .notification-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .notification .notification-icon {
+      font-size: 24px;
+      color: #DAA755;
+    }
+
+    .notification.success .notification-icon {
+      color: #4caf50;
+    }
+
+    .notification.error .notification-icon {
+      color: #f44336;
+    }
+
+    .notification .notification-text {
+      flex: 1;
+    }
+
+    .notification .notification-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: #462506;
+      margin-bottom: 5px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .notification .notification-message {
+      font-size: 14px;
+      color: #5D4037;
+      line-height: 1.4;
+    }
+
+    /* RIPPLE EFFECT */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple-animation 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="/homepage" class="btn btn-secondary mb-4">
+      <i class="bi bi-arrow-left-circle"></i>
+      Kembali
+    </a>
+    
+    <div class="row g-5">
+      <div class="col-md-6">
+        <div class="image-container">
+          <img src="/img/ysl.png" class="img-fluid" alt="YSL Y">
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <h1>YSL Y</h1>
+        <p class="text-muted" id="hargaSatuan">Rp 1.000 / semprot</p>
+        <p class="product-description">Wangi bunga segar dengan ketahanan hingga 8 jam. Cocok untuk aktivitas harian maupun acara spesial. Perpaduan sempurna antara kesegaran dan kemewahan yang akan membuat Anda tampil percaya diri sepanjang hari.</p>
+
+        <div class="form-section">
+          <!-- Pilih Lokasi -->
+          <div class="location-selector">
+            <select class="form-select" id="lokasi" required>
+              <option selected disabled>Pilih Lokasi Vending Machine</option>
+              <option value="store1">🏪 Toko 1 - Mall Central Park</option>
+              <option value="store2">🏪 Toko 2 - Plaza Indonesia</option>
+            </select>
+          </div>
+
+          <!-- Quantity -->
+          <div class="quantity-label">Jumlah Semprotan</div>
+          <div class="quantity-box">
+            <button class="btn btn-outline-secondary" onclick="changeQuantity(-1)" type="button">
+              <i class="bi bi-dash"></i>
+            </button>
+            <input type="text" id="quantity" value="1" class="form-control text-center" readonly>
+            <button class="btn btn-outline-secondary" onclick="changeQuantity(1)" type="button">
+              <i class="bi bi-plus"></i>
+            </button>
+          </div>
+
+          <!-- Form Pesan -->
+          <form id="cartForm" action="/keranjang/tambah" method="POST">
+            <input type="hidden" name="produkId" value="<%= produk._id %>">
+            <input type="hidden" id="quantityInput" name="quantity" value="1">
+            <button type="submit" class="btn btn-pesan w-100" onclick="return pesanSekarang()">
+              <i class="bi bi-cart-plus me-2"></i>
+              Pesan Sekarang
+            </button>
+          </form>
+
+          <!-- Total Harga -->
+          <div id="totalHarga">Rp 1.000,-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Notification Container -->
+  <div id="notificationContainer"></div>
+
+  <script>
+    const hargaPerItem = 1000;
+
+    // Enhanced notification system
+    function showNotification(type, title, message, duration = 4000) {
+      const container = document.getElementById('notificationContainer');
+      
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      
+      const iconMap = {
+        success: 'bi-check-circle-fill',
+        error: 'bi-x-circle-fill',
+        info: 'bi-info-circle-fill'
+      };
+      
+      notification.innerHTML = `
+        <div class="notification-content">
+          <div class="notification-icon">
+            <i class="bi ${iconMap[type]}"></i>
+          </div>
+          <div class="notification-text">
+            <div class="notification-title">${title}</div>
+            <div class="notification-message">${message}</div>
+          </div>
+        </div>
+      `;
+      
+      container.appendChild(notification);
+      
+      // Show notification with animation
+      setTimeout(() => notification.classList.add('show'), 100);
+      
+      // Auto remove after duration
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 500);
+      }, duration);
+    }
+
+    function changeQuantity(delta) {
+      const qtyInput = document.getElementById('quantity');
+      const qtyHidden = document.getElementById('quantityInput');
+      let qty = parseInt(qtyInput.value) || 1;
+      qty += delta;
+      if (qty < 1) qty = 1;
+      if (qty > 50) {
+        showNotification('error', 'Batas Maksimal!', 'Maksimal 50 semprotan per pesanan.');
+        qty = 50;
+      }
+      qtyInput.value = qty;
+      qtyHidden.value = qty;
+      updateTotal();
+      
+      // Add visual feedback
+      qtyInput.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        qtyInput.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    function updateTotal() {
+      const qty = parseInt(document.getElementById('quantity').value);
+      const total = hargaPerItem * qty;
+      const totalHarga = document.getElementById('totalHarga');
+      totalHarga.innerText = "Rp " + total.toLocaleString('id-ID') + ",-";
+
+      // Enhanced animation
+      totalHarga.classList.remove('animate');
+      void totalHarga.offsetWidth;
+      totalHarga.classList.add('animate');
+      
+      // Add sparkle effect for large quantities
+      if (qty >= 10) {
+        totalHarga.style.background = 'linear-gradient(135deg, rgba(218, 167, 85, 0.3) 0%, rgba(241, 222, 168, 0.4) 100%)';
+      } else {
+        totalHarga.style.background = 'linear-gradient(135deg, rgba(218, 167, 85, 0.2) 0%, rgba(241, 222, 168, 0.3) 100%)';
+      }
+    }
+
+    function pesanSekarang() {
+      const lokasi = document.getElementById('lokasi').value;
+      if (!lokasi) {
+        showNotification('error', 'Lokasi Diperlukan!', 'Silakan pilih lokasi vending machine terlebih dahulu.');
+        document.getElementById('lokasi').focus();
+        return false;
+      }
+      
+      // Show loading
+      document.getElementById('loadingOverlay').classList.add('show');
+      
+      // Show success notification
+      setTimeout(() => {
+        document.getElementById('loadingOverlay').classList.remove('show');
+        showNotification('success', 'Berhasil!', 'Produk telah ditambahkan ke keranjang.');
+      }, 1500);
+      
+      return true;
+    }
+
+    // Enhanced loading animation
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add ripple effect to buttons
+      document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+          const ripple = document.createElement('span');
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+          
+          ripple.style.width = ripple.style.height = size + 'px';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          ripple.classList.add('ripple');
+          
+          this.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+
+      // Enhanced form interactions
+      const locationSelect = document.getElementById('lokasi');
+      locationSelect.addEventListener('change', function() {
+        if (this.value) {
+          showNotification('info', 'Lokasi Dipilih!', `Anda memilih ${this.options[this.selectedIndex].text}`);
+        }
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === '+' || e.key === '=') {
+          e.preventDefault();
+          changeQuantity(1);
+        } else if (e.key === '-') {
+          e.preventDefault();
+          changeQuantity(-1);
+        }
+      });
+
+      // Enhanced hover effects
+      const quantityButtons = document.querySelectorAll('.quantity-box .btn');
+      quantityButtons.forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-2px) scale(1.05)';
+        });
+        
+        btn.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+
+      // Auto-focus on quantity input when page loads
+      setTimeout(() => {
+        document.getElementById('quantity').focus();
+      }, 1000);
+    });
+
+    // Premium scroll effects
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const container = document.querySelector('.container');
+      
+      if (container) {
+        container.style.transform = `translateY(${scrolled * 0.05}px)`;
+      }
+    });
+  </script>
+</body>
+
+</html>
